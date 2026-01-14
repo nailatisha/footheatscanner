@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Foot Heat Scanner</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="brand">FootHeatScanner</div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Scan</a>
+    <a href="#">History</a>
+  </nav>
+</header>
+
+<section class="section hero">
+  <div class="hero-text">
+    <p class="eyebrow">AI Thermal Analysis</p>
+    <h1>Foot Heat Scanner</h1>
+    <p class="subhead">Analyze foot temperature patterns using AI simulation</p>
+
+    <div class="cta-row">
+      <button class="btn primary">Start Scan</button>
+      <button class="btn ghost">Documentation</button>
+    </div>
+
+    <div class="disclaimer">
+      Educational demo only, not for medical diagnosis
+    </div>
+  </div>
+
+  <div class="hero-media">
+    <div class="image-frame overlay-sample large"></div>
+    <p class="caption">Sample thermal visualization</p>
+  </div>
+</section>
+
+<section class="section upload">
+  <div class="card upload-card gradient">
+    <div class="upload-copy">
+      <h2>Input Scan Data</h2>
+      <p class="muted">Simulate a scan by entering temperature data</p>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="label">Temperature (°C)</div>
+        <input type="number" step="0.1" name="temperature" required>
+
+        <div class="label">Status</div>
+        <input type="text" name="status" required>
+
+        <div class="cta-row">
+          <button class="btn primary" type="submit">Run Scan</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="image-frame placeholder">
+      <div class="placeholder-text">Thermal Image</div>
+    </div>
+  </div>
+</section>
+
+<section class="section results">
+  <h2>Scan Results</h2>
+
+  <div class="tab-list">
+    <button class="tab active" data-target="panel-summary" aria-selected="true">
+      Summary
+    </button>
+    <button class="tab" data-target="panel-history" aria-selected="false">
+      History
+    </button>
+  </div>
+
+  <div id="panel-summary" class="tab-panel active">
+    {% if results %}
+      {% with latest=results.0 %}
+        <div class="card">
+          <div class="label">Latest Temperature</div>
+          <div class="value">{{ latest.temperature }} °C</div>
+          <div class="hero-status">
+            <span class="pill info">{{ latest.status }}</span>
+          </div>
+        </div>
+      {% endwith %}
+    {% else %}
+      <p class="muted">No data available</p>
+    {% endif %}
+  </div>
+
+  <div id="panel-history" class="tab-panel">
+    <div class="history-grid">
+      {% for result in results %}
+        <div class="card history-item">
+          <div class="badge">Scan</div>
+          <div class="value">{{ result.temperature }} °C</div>
+          <span class="pill neutral">{{ result.status }}</span>
+          <div class="muted">{{ result.scanned_at }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  FootHeatScanner © 2026
+</footer>
+
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
