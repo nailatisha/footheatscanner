@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Foot Heat Scanner{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="brand">FootHeatScanner</div>
+  <nav>
+    <a href="{% url 'landing' %}">Home</a>
+    <a href="{% url 'scanner' %}">Scan</a>
+  </nav>
+</header>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  FootHeatScanner © 2026 — Educational Demo Only
+</footer>
+
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
