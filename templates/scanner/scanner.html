@@ -1,64 +1,22 @@
 {% extends 'scanner/base.html' %}
-{% block title %}Scan | FootHeatScanner{% endblock %}
+{% block title %}Scanner{% endblock %}
 
 {% block content %}
 <section class="section upload">
   <div class="card upload-card gradient">
 
-    <div class="upload-copy">
-      <h2>Simulated Foot Scan</h2>
-      <p class="muted">Enter thermal parameters to simulate AI analysis</p>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
 
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+      <h2>Foot Heat Scan</h2>
 
-        <div class="label">Region</div>
-        <select name="region" required>
-          <option value="heel">Heel</option>
-          <option value="arch">Arch</option>
-          <option value="toe">Toe</option>
-        </select>
+      <input type="file" name="image" required>
 
-        <div class="label">Mean Temperature (°C)</div>
-        <input type="number" step="0.1" name="temperature" required>
+      <button class="btn primary" type="submit">
+        Run Scan
+      </button>
+    </form>
 
-        <div class="label">Temperature Delta (°C)</div>
-        <input type="number" step="0.1" name="delta_temp">
-
-        <div class="cta-row">
-          <button type="submit" class="btn primary">Run AI Scan</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="image-frame placeholder">
-      <div class="placeholder-text">Thermal Image Preview</div>
-    </div>
   </div>
 </section>
-
-{% if latest %}
-<section class="section results">
-  <h2>Latest Scan Summary</h2>
-
-  <div class="card">
-    <div class="label">Diagnosis</div>
-    <div class="value">{{ latest.diagnosis }}</div>
-
-    <div class="hero-status">
-      <span class="pill info">Confidence {{ latest.confidence }}%</span>
-      <span class="pill neutral">{{ latest.region|title }}</span>
-    </div>
-
-    <p class="muted">
-      Temperature: {{ latest.temperature }} °C<br>
-      ΔT: {{ latest.delta_temp }} °C
-    </p>
-
-    <a href="{% url 'results' latest.id %}" class="btn ghost">
-      View Detailed Result
-    </a>
-  </div>
-</section>
-{% endif %}
 {% endblock %}

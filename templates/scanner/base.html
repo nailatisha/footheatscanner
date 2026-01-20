@@ -4,26 +4,28 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Foot Heat Scanner{% endblock %}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
 <header class="top-nav">
-  <div class="brand">FootHeatScanner</div>
+  <div class="brand">Grad-CAM Foot Visualization Lab</div>
   <nav>
-    <a href="{% url 'landing' %}">Home</a>
+    <a href="{% url 'landing' %}">Landing</a>
     <a href="{% url 'scanner' %}">Scan</a>
   </nav>
 </header>
 
-<main>
-  {% block content %}{% endblock %}
-</main>
+{% block content %}{% endblock %}
 
 <footer class="footer">
-  FootHeatScanner © 2026 — Educational Demo Only
+  <div>Grad-CAM Foot Visualization Lab</div>
+  <div class="muted">Visualization tool only. No diagnostic claims.</div>
 </footer>
 
 <script src="{% static 'js/script.js' %}"></script>
